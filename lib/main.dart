@@ -9,15 +9,19 @@ import 'package:movies_app/shared/bloc_observer.dart';
 import 'package:movies_app/shared/injection_container.dart';
 
 void main() async {
+  
   WidgetsFlutterBinding.ensureInitialized();
   await initDI();
   await dotenv.load(fileName: ".env");
   ScreenUtil.ensureScreenSize();
   Bloc.observer = MyBlocObserver();
   runApp(
-    DevicePreview(
-      enabled: !kReleaseMode,
-      builder: (context) => const MyApp(),
-    ),
+    //DevicePreview(
+    //  enabled: !kReleaseMode,
+     // builder: (context) => 
+      const MyApp(),
+   // ),
   );
 }
+
+

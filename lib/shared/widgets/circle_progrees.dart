@@ -8,9 +8,11 @@ class CircleProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const appBarHeight = kToolbarHeight;
+    const bottomNavHeight = kBottomNavigationBarHeight;
     return SizedBox(
       width: AppWidth.sw,
-      height: AppHeight.sh,
+      height: AppHeight.sh - appBarHeight - bottomNavHeight,
       child: Center(
         child: LoadingAnimationWidget.threeRotatingDots(
             color: ColorManager.primary, size: AppHeight.sh0_1),

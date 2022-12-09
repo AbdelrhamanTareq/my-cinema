@@ -26,6 +26,7 @@ class AppWidth {
 
 class AppHeight {
   static final double sh0_1 = 0.1.sh;
+  static final double sh0_2 = 0.2.sh;
   static final double sh0_25 = 0.25.sh;
   static final double sh0_4 = 0.4.sh;
   static final double sh0_5 = 0.5.sh;

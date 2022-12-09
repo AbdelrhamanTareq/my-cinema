@@ -27,8 +27,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _goNext() {
     (getAppHomeScreen)
-        ? Navigator.pushNamed(context, Routes.homePage)
-        : Navigator.pushNamed(context, Routes.onBoardingRoute);
+        ? Navigator.pushReplacementNamed(context, Routes.homePage)
+        : Navigator.pushReplacementNamed(context, Routes.onBoardingRoute);
   }
 
   @override

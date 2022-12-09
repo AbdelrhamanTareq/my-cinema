@@ -1,9 +1,7 @@
 import 'package:movies_app/data/models/box_office.dart';
 import 'package:movies_app/data/models/coming_soon.dart';
 import 'package:movies_app/data/models/genre.dart';
-import 'package:movies_app/data/models/genre_data_details.dart';
 import 'package:movies_app/data/models/most_popular.dart';
-import 'package:movies_app/data/models/movie_details.dart';
 import 'package:movies_app/data/models/trending_movies.dart';
 import 'package:movies_app/data/network/error_handler.dart';
 

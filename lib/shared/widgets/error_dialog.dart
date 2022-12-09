@@ -18,9 +18,12 @@ class ErrorDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
+    const appBarHeight = kToolbarHeight;
+    const bottomNavHeight = kBottomNavigationBarHeight;
     return Container(
       width: AppWidth.sw,
-      height: AppHeight.sh,
+      height: AppHeight.sh - appBarHeight - bottomNavHeight,
       alignment: Alignment.center,
       child: Container(
         width: AppWidth.sw0_75,

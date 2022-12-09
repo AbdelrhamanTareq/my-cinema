@@ -1,4 +1,7 @@
+// ignore: duplicate_ignore
 // GENERATED CODE - DO NOT MODIFY BY HAND
+
+// ignore_for_file: duplicate_ignore
 
 part of 'app_api.dart';
 

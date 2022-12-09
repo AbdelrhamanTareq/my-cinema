@@ -11,13 +11,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
+      designSize: const Size(360, 690),
       builder: (BuildContext context, Widget? child) {
+        
         SystemChrome.setSystemUIOverlayStyle(
             const SystemUiOverlayStyle(statusBarColor: Colors.black));
         return MaterialApp(
           useInheritedMediaQuery: true,
-          builder: DevicePreview.appBuilder,
-          locale: DevicePreview.locale(context),
+          //builder: DevicePreview.appBuilder,
+          //locale: DevicePreview.locale(context),
           debugShowCheckedModeBanner: false,
           theme: ThemeManger.getAppTheme(),
           onGenerateRoute: RouteGenerator.getRoute,

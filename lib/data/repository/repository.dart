@@ -38,7 +38,7 @@ class RepoistoryImpl implements Repoistory {
   @override
   Future<Either<Failure, Trending>> getTrendingMovies() async {
     try {
-      final response = await _localDataSource.getTrendingData();
+      final response =  _localDataSource.getTrendingData();
       return Right(response);
     } catch (e) {
       if (await _networkInfo.isConnected) {
@@ -58,7 +58,7 @@ class RepoistoryImpl implements Repoistory {
   @override
   Future<Either<Failure, Trending>> getTopWeekMovies() async {
     try {
-      final response = await _localDataSource.getTopWeekData();
+      final response =  _localDataSource.getTopWeekData();
       return right(response);
     } catch (e) {
       if (await _networkInfo.isConnected) {
@@ -78,7 +78,7 @@ class RepoistoryImpl implements Repoistory {
   @override
   Future<Either<Failure, Genre>> getGenre() async {
     try {
-      final response = await _localDataSource.getGenreData();
+      final response =  _localDataSource.getGenreData();
       return Right(response);
     } catch (e) {
       if (await _networkInfo.isConnected) {
@@ -98,7 +98,7 @@ class RepoistoryImpl implements Repoistory {
   @override
   Future<Either<Failure, ComingSoon>> getComingSoon() async {
     try {
-      final respose = await _localDataSource.getCommingSoonData();
+      final respose =  _localDataSource.getCommingSoonData();
       return Right(respose);
     } catch (e) {
       if (await _networkInfo.isConnected) {
@@ -122,7 +122,7 @@ class RepoistoryImpl implements Repoistory {
   @override
   Future<Either<Failure, BoxOffice>> getBoxOffice() async {
     try {
-      final response = await _localDataSource.getBoxOfficeData();
+      final response =  _localDataSource.getBoxOfficeData();
       return Right(response);
     } catch (e) {
       if (await _networkInfo.isConnected) {
@@ -146,7 +146,7 @@ class RepoistoryImpl implements Repoistory {
   @override
   Future<Either<Failure, MostPopular>> getMostPopukarTvs() async {
     try {
-      final response = await _localDataSource.getMostPopulatTvsData();
+      final response =  _localDataSource.getMostPopulatTvsData();
       return Right(response);
     } catch (e) {
       if (await _networkInfo.isConnected) {
@@ -170,7 +170,7 @@ class RepoistoryImpl implements Repoistory {
   @override
   Future<Either<Failure, MostPopular>> getMostPopukarMovies() async {
     try {
-      final response = await _localDataSource.getMostPopulatMoviesData();
+      final response =  _localDataSource.getMostPopulatMoviesData();
       return Right(response);
     } catch (e) {
       if (await _networkInfo.isConnected) {
