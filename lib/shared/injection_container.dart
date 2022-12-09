@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:movies_app/data/data_source/local_data_source.dart';
 import 'package:movies_app/data/data_source/remote_data_source.dart';
 
 import 'package:movies_app/data/network/app_api.dart';
@@ -24,9 +25,12 @@ Future<void> initDI() async {
   instance.registerLazySingleton<RemoteDataSourec>(
       () => RemoteDataSourecImpl(instance(), instance()));
 
+  // remote data source
+  instance.registerLazySingleton<LocalDataSource>(() => LocalDataSourceImpl());
+
   // repo
   instance.registerLazySingleton<Repoistory>(
-      () => RepoistoryImpl(instance(), instance()));
+      () => RepoistoryImpl(instance(), instance(), instance()));
 
   //API
   instance.registerLazySingleton<DioFactory>(() => DioFactory());

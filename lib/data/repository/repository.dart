@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:movies_app/data/data_source/local_data_source.dart';
 import 'package:movies_app/data/data_source/remote_data_source.dart';
 import 'package:movies_app/data/models/box_office.dart';
 import 'package:movies_app/data/models/coming_soon.dart';
@@ -28,126 +29,170 @@ abstract class Repoistory {
 
 class RepoistoryImpl implements Repoistory {
   final RemoteDataSourec _remoteDataSourec;
+  final LocalDataSource _localDataSource;
   final NetworkInfo _networkInfo;
 
-  RepoistoryImpl(this._remoteDataSourec, this._networkInfo);
+  RepoistoryImpl(
+      this._remoteDataSourec, this._networkInfo, this._localDataSource);
 
   @override
   Future<Either<Failure, Trending>> getTrendingMovies() async {
-    if (await _networkInfo.isConnected) {
-      try {
-        final response = await _remoteDataSourec.getTrendingMovies();
-        return Right(response);
-      } catch (error) {
-        return Left(ErrorHandler.handle(error).failure);
+    try {
+      final response = await _localDataSource.getTrendingData();
+      return Right(response);
+    } catch (e) {
+      if (await _networkInfo.isConnected) {
+        try {
+          final response = await _remoteDataSourec.getTrendingMovies();
+          _localDataSource.setTrendingData(response);
+          return Right(response);
+        } catch (error) {
+          return Left(ErrorHandler.handle(error).failure);
+        }
+      } else {
+        return Left(DataMessage.noInternetConnection.getFailure());
       }
-    } else {
-      return Left(DataMessage.noInternetConnection.getFailure());
     }
   }
 
   @override
   Future<Either<Failure, Trending>> getTopWeekMovies() async {
-    if (await _networkInfo.isConnected) {
-      try {
-        final response = await _remoteDataSourec.getTopWeekMovies();
-        return Right(response);
-      } catch (error) {
-        return Left(ErrorHandler.handle(error).failure);
+    try {
+      final response = await _localDataSource.getTopWeekData();
+      return right(response);
+    } catch (e) {
+      if (await _networkInfo.isConnected) {
+        try {
+          final response = await _remoteDataSourec.getTopWeekMovies();
+          _localDataSource.setTopWeekData(response);
+          return Right(response);
+        } catch (error) {
+          return Left(ErrorHandler.handle(error).failure);
+        }
+      } else {
+        return Left(DataMessage.noInternetConnection.getFailure());
       }
-    } else {
-      return Left(DataMessage.noInternetConnection.getFailure());
     }
   }
 
   @override
-  Future<Either<Failure, Genre>> getGenre() async{
-    if (await _networkInfo.isConnected) {
-      try {
-        final response = await _remoteDataSourec.getGenre();
-        return Right(response);
-      } catch (error) {
-        return Left(ErrorHandler.handle(error).failure);
+  Future<Either<Failure, Genre>> getGenre() async {
+    try {
+      final response = await _localDataSource.getGenreData();
+      return Right(response);
+    } catch (e) {
+      if (await _networkInfo.isConnected) {
+        try {
+          final response = await _remoteDataSourec.getGenre();
+          _localDataSource.setGenreData(response);
+          return Right(response);
+        } catch (error) {
+          return Left(ErrorHandler.handle(error).failure);
+        }
+      } else {
+        return Left(DataMessage.noInternetConnection.getFailure());
       }
-    } else {
-      return Left(DataMessage.noInternetConnection.getFailure());
     }
   }
 
   @override
   Future<Either<Failure, ComingSoon>> getComingSoon() async {
-    if (await _networkInfo.isConnected) {
-      try {
-        final response = await _remoteDataSourec.getComingSoon();
-        if (response.errorMessage!.isEmpty) {
-          return Right(response);
-        } else {
-          return Left(Failure(AppInternalCode.error, response.errorMessage!));
+    try {
+      final respose = await _localDataSource.getCommingSoonData();
+      return Right(respose);
+    } catch (e) {
+      if (await _networkInfo.isConnected) {
+        try {
+          final response = await _remoteDataSourec.getComingSoon();
+          if (response.errorMessage!.isEmpty) {
+            _localDataSource.setComingSoonData(response);
+            return Right(response);
+          } else {
+            return Left(Failure(AppInternalCode.error, response.errorMessage!));
+          }
+        } catch (error) {
+          return Left(ErrorHandler.handle(error).failure);
         }
-      } catch (error) {
-        return Left(ErrorHandler.handle(error).failure);
+      } else {
+        return Left(DataMessage.noInternetConnection.getFailure());
       }
-    } else {
-      return Left(DataMessage.noInternetConnection.getFailure());
     }
   }
 
   @override
   Future<Either<Failure, BoxOffice>> getBoxOffice() async {
-    if (await _networkInfo.isConnected) {
-      try {
-        final response = await _remoteDataSourec.getBoxOffice();
-        if (response.errorMessage!.isEmpty) {
-          return Right(response);
-        } else {
-          return Left(Failure(AppInternalCode.error, response.errorMessage!));
+    try {
+      final response = await _localDataSource.getBoxOfficeData();
+      return Right(response);
+    } catch (e) {
+      if (await _networkInfo.isConnected) {
+        try {
+          final response = await _remoteDataSourec.getBoxOffice();
+          if (response.errorMessage!.isEmpty) {
+            _localDataSource.setBoxOfficeData(response);
+            return Right(response);
+          } else {
+            return Left(Failure(AppInternalCode.error, response.errorMessage!));
+          }
+        } catch (error) {
+          return Left(ErrorHandler.handle(error).failure);
         }
-      } catch (error) {
-        return Left(ErrorHandler.handle(error).failure);
+      } else {
+        return Left(DataMessage.noInternetConnection.getFailure());
       }
-    } else {
-      return Left(DataMessage.noInternetConnection.getFailure());
     }
   }
-  
+
   @override
-  Future<Either<Failure, MostPopular>> getMostPopukarTvs() async{
-   if (await _networkInfo.isConnected) {
-      try {
-        final response = await _remoteDataSourec.getMostPopukarTvs();
-        if (response.errorMessage!.isEmpty) {
-          return Right(response);
-        } else {
-          return Left(Failure(AppInternalCode.error, response.errorMessage!));
+  Future<Either<Failure, MostPopular>> getMostPopukarTvs() async {
+    try {
+      final response = await _localDataSource.getMostPopulatTvsData();
+      return Right(response);
+    } catch (e) {
+      if (await _networkInfo.isConnected) {
+        try {
+          final response = await _remoteDataSourec.getMostPopukarTvs();
+          if (response.errorMessage!.isEmpty) {
+            _localDataSource.setMostPopulatTvsData(response);
+            return Right(response);
+          } else {
+            return Left(Failure(AppInternalCode.error, response.errorMessage!));
+          }
+        } catch (error) {
+          return Left(ErrorHandler.handle(error).failure);
         }
-      } catch (error) {
-        return Left(ErrorHandler.handle(error).failure);
+      } else {
+        return Left(DataMessage.noInternetConnection.getFailure());
       }
-    } else {
-      return Left(DataMessage.noInternetConnection.getFailure());
     }
   }
-  
+
   @override
-  Future<Either<Failure, MostPopular>> getMostPopukarMovies() async{
-    if (await _networkInfo.isConnected) {
-      try {
-        final response = await _remoteDataSourec.getMostPopukarMovies();
-        if (response.errorMessage!.isEmpty) {
-          return Right(response);
-        } else {
-          return Left(Failure(AppInternalCode.error, response.errorMessage!));
+  Future<Either<Failure, MostPopular>> getMostPopukarMovies() async {
+    try {
+      final response = await _localDataSource.getMostPopulatMoviesData();
+      return Right(response);
+    } catch (e) {
+      if (await _networkInfo.isConnected) {
+        try {
+          final response = await _remoteDataSourec.getMostPopukarMovies();
+          if (response.errorMessage!.isEmpty) {
+            _localDataSource.setMostPopulatMoviesData(response);
+            return Right(response);
+          } else {
+            return Left(Failure(AppInternalCode.error, response.errorMessage!));
+          }
+        } catch (error) {
+          return Left(ErrorHandler.handle(error).failure);
         }
-      } catch (error) {
-        return Left(ErrorHandler.handle(error).failure);
+      } else {
+        return Left(DataMessage.noInternetConnection.getFailure());
       }
-    } else {
-      return Left(DataMessage.noInternetConnection.getFailure());
     }
   }
-  
+
   @override
-  Future<Either<Failure, Search>> search(String exprission) async{
+  Future<Either<Failure, Search>> search(String exprission) async {
     if (await _networkInfo.isConnected) {
       try {
         final response = await _remoteDataSourec.search(exprission);
@@ -163,16 +208,17 @@ class RepoistoryImpl implements Repoistory {
       return Left(DataMessage.noInternetConnection.getFailure());
     }
   }
-  
+
   @override
-  Future<Either<Failure, MovieDetails>> getMovieDetails(String id)async {
-   if (await _networkInfo.isConnected) {
+  Future<Either<Failure, MovieDetails>> getMovieDetails(String id) async {
+    if (await _networkInfo.isConnected) {
       try {
         final response = await _remoteDataSourec.getMovieDetails(id);
         if (response.errorMessage == null) {
           return Right(response);
         } else {
-          return Left(Failure(AppInternalCode.error, response.errorMessage ?? ResponseMessage.defalut));
+          return Left(Failure(AppInternalCode.error,
+              response.errorMessage ?? ResponseMessage.defalut));
         }
       } catch (error) {
         return Left(ErrorHandler.handle(error).failure);
@@ -181,10 +227,10 @@ class RepoistoryImpl implements Repoistory {
       return Left(DataMessage.noInternetConnection.getFailure());
     }
   }
-  
+
   @override
-  Future<Either<Failure, Trending>> getGenreData(int id)async {
-   if (await _networkInfo.isConnected) {
+  Future<Either<Failure, Trending>> getGenreData(int id) async {
+    if (await _networkInfo.isConnected) {
       try {
         final response = await _remoteDataSourec.getGenreData(id);
         if (response.results != null) {
@@ -199,11 +245,10 @@ class RepoistoryImpl implements Repoistory {
       return Left(DataMessage.noInternetConnection.getFailure());
     }
   }
-  
+
   @override
-  Future<Either<Failure, GenreDataDetails>> getGenreDataDetails(int id) async{
-    
-  if (await _networkInfo.isConnected) {
+  Future<Either<Failure, GenreDataDetails>> getGenreDataDetails(int id) async {
+    if (await _networkInfo.isConnected) {
       try {
         final response = await _remoteDataSourec.getGenreDataDetails(id);
         if (response.toString().isNotEmpty) {
@@ -218,6 +263,4 @@ class RepoistoryImpl implements Repoistory {
       return Left(DataMessage.noInternetConnection.getFailure());
     }
   }
-  
-  
 }
