@@ -1,10 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:movies_app/shared/config/routes_manger.dart';
+import 'package:movies_app/shared/injection_container.dart';
 
 import 'package:movies_app/shared/utilis/app_size.dart';
 import 'package:movies_app/shared/utilis/colors_manger.dart';
 import 'package:movies_app/shared/utilis/string_manager.dart';
+
+import '../../ui/home/cubit/home_cubit.dart';
 
 class ErrorDialog extends StatelessWidget {
   const ErrorDialog({
@@ -54,7 +57,7 @@ class ErrorDialog extends StatelessWidget {
             TextButton(
               onPressed: retryFunciton ??
                   () {
-                    Navigator.pushNamed(context, Routes.movieDetails);
+                    instance<HomeCubit>().getHomeData();
                   },
               child: Text(
                 StringManager.retry,
