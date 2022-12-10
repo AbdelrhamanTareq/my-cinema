@@ -29,7 +29,7 @@ A new Flutter project.
 
 ## App Pages
   
-<li>splach screen
+<li>splash screen
 <li>onboarding screen
 <li>home screen
 <li>search screen
