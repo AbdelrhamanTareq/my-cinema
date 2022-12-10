@@ -6,9 +6,9 @@ A new Flutter project.
 
 ## This is a movies app made with flutter and dart based on MVVM design architecture and bloc as state management, dio for api handling , shared preferences for loacal data
 
- <p>In this app you get Box office Moives
+ <p>In this app you get Box office Movies
  <p>you can also get Top 5 in week and Trending Movies
- <p>Top Movies and Top Tv seires
+ <p>Top Movies and Top Tv series
  <p>Collections
  <p>search for movies and series
  <p>movies details such like release date, overview, actor list and rating etc
