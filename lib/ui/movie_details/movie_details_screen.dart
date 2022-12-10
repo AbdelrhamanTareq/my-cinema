@@ -197,7 +197,7 @@ class MovieDeailsScreen extends StatelessWidget {
             height: AppHeight.h10,
           ),
           Text(
-            desc,
+            desc?? "N/A",
             style: Theme.of(context).textTheme.bodyText1,
           ),
         ],
